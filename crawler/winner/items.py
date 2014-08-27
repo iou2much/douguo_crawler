@@ -17,3 +17,8 @@ class WinnerItem(Item):
     zuone_url = Field()
     zuone_piao = Field()
 
+class CookbookItem(Item):
+    itemid = Field()
+    tip = Field()
+    matter = Field()
+    steps = Field()
