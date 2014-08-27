@@ -44,20 +44,9 @@ class Douguo_cookbookSpider(Spider):
             if matt_name and matt_amount :
                 matter.append({'name':matt_name,'amount':matt_amount})
         steps = div.xpath('div/div[@class="step clearfix"]/div').extract()
-        #print len(steps)
-        #print steps[0]
         cb = CookbookItem()
         cb['itemid'] = response.meta['itemid']
         cb['tip'] = tip
         cb['matter'] = matter
         cb['steps'] = steps
         yield cb
-        #for zuone in div:
-        #    zuone_data = WinnerItem()
-        #    zuone_data['zuone_author_name'] = zuone.xpath('div[@class="zphed"]/a/@title').extract()[0]
-        #    zuone_data['zuone_author_img'] = zuone.xpath('div[@class="zphed"]/a/img/@src').extract()[0]
-        #    zuone_data['zuone_name'] = zuone.xpath('div[@class="rcname"]/a/@title').extract()[0]
-        #    zuone_data['zuone_img'] = zuone.xpath('div[@class="imgxc"]/a/img/@src').extract()[0]
-        #    zuone_data['zuone_url'] = 'http://www.douguo.com'+zuone.xpath('div[@class="imgxc"]/a/@href').extract()[0]
-        #    zuone_data['zuone_piao'] = zuone.xpath('div[@class="piaonum"]/font/text()').extract()[0]
-        #    yield zuone_data
