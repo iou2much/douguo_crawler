@@ -22,3 +22,9 @@ class CookbookItem(Item):
     tip = Field()
     matter = Field()
     steps = Field()
+
+class MaterialItem(Item):
+    name = Field()
+    url = Field()
+    img = Field()
+    effect = Field()

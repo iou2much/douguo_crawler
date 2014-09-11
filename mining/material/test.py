@@ -5,17 +5,23 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 import jieba.posseg as pseg
 
-a = u'高筋面粉'
-b = u'淡奶油'
-c = u'低筋粉'
-d = u'高筋粉'
+words = [u'高筋面粉', u'淡奶油', u'低筋粉', u'高筋粉']
 
-a = pseg.cut(a)
-for w in a:
-    print '%s/%s'%(w.word,w.flag)
+for i in xrange(len(words)):
+    a = words[i]
+    a = pseg.cut(a)
+    a = nltk.Text(' '.join([ '%s/%s'%(w.word,w.flag) for w in a]))
+    #a = nltk.Text(' '.join([ '%s'%w.word for w in a]))
+    words[i] = a
+    print a
+#for w in a:
+#    print '%s/%s'%(w.word,w.flag)
+#print a
     #print ' '.join(w)
-#na = nltk.Text(a)
-#print na.similar(d)
+na = words[0]
+print str(na)
+print(str(words[3]))
+print na.similar(str(words[3]))
 
 
 

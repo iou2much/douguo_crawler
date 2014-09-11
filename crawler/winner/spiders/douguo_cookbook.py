@@ -1,4 +1,14 @@
 #-*-coding:UTF-8-*-
+
+
+#-*-coding:utf-8 -*-
+if __name__=='__main__':
+    import os,sys
+    sys.path.append(os.environ['DOUGUO_BASE'])
+
+from config import CONFIG
+from orm.Cookbook import Cookbook 
+
 from scrapy.spider import Spider
 from scrapy.selector import Selector  
 from scrapy.http import Request

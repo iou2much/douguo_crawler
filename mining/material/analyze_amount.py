@@ -18,29 +18,6 @@ import jieba.posseg as pseg
 
 data = Material.objects()
 
-#_data = []
-#for d in data:
-#    _d = {}
-#    _d['name'] = d
-#    _d['amount'] = data[d]
-#    _data.append(_d)
-#data = _data
-
-#field = 'amount'
-#field = 'name'
-#steps = []
-#if 'name'==field:
-#for s in data:#.only('name'):
-    #step = []
-    #print s.name
-    #s.name = re.sub(r'\r\n','\n',s.name)
-    #s.name = re.sub(r'\t','    ',s.name)
-    #s.name = 'xxx'+nltk.clean_html(re.sub(r' +',' ',s.name))+'\n'
-    #print s.name
-    #step.append(s.name)
-    #steps.append(''.join(step))
-
-
 units = []
 _units = {}
 all_amount = {}
@@ -74,8 +51,10 @@ df['unit'] = df['unit'].apply(list)
 #    for word in words:
 #        print word
 #    print '='*50
-print df
 #导出json
+df.to_csv('material_amount.csv')
+#open('result/material_amount.json','w').write(json.dumps(df.to_dict(outtype='records')))
+#print df
 #print json.dumps(df.to_dict(outtype='records'))
 #df.plot()
 #sys.exit()

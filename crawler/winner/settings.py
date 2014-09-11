@@ -12,6 +12,8 @@ BOT_NAME = 'winner'
 
 SPIDER_MODULES = ['winner.spiders']
 NEWSPIDER_MODULE = 'winner.spiders'
+DOWNLOAD_DELAY = 0.3    # 250 ms of delay
+USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; rv:31.0) Gecko/20100101 Firefox/31.0"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'winner (+http://www.yourdomain.com)'

@@ -1,39 +1,29 @@
-#-*-coding:utf-8-*-
-"""
-Simple demo of a horizontal bar chart.
-"""
-import json
-import pandas as pd
-import pylab
-import sys
+#-*-coding:utf-8 -*-
+if __name__=='__main__':
+    import os,sys
+    sys.path.append(os.environ['DOUGUO_BASE'])
+
+from config import CONFIG
+import sys,json,re
 reload(sys)
 sys.setdefaultencoding('utf-8')
-import matplotlib
-import matplotlib.pyplot as plt; plt.rcdefaults()
-import numpy as np
-import matplotlib.pyplot as plt
-matplotlib.rcParams['font.sans-serif'] = ['Droid Sans Fallback']
+import jieba
+import nltk
 
 
-_matters = json.loads(open('data/matters.json','r').read())
-matters = [{'name':m,'count':len(_matters[m])} for m in _matters if len(_matters[m])>=10]
+txt= u" 一 二三四 一 六 七 一 二三四 一 六 七"
 
-plt.figure()
-df = pd.DataFrame(matters)
-df = df.sort(columns='count',ascending=True)
+cook_books = json.loads(open(CONFIG['DATA_PATH']+'winner.json','r').read())
+names = []
+deCstr = r'#，。《》【】（）！？★”“、：…()""'''
+for cb in cook_books:
+   #if cb['zuone_name'] in deCstr:continue
+   print cb['zuone_name'],len(cb['zuone_name'])
+   if len(cb['zuone_name']) != 1:continue
+   names += jieba.cut(cb['zuone_name'])
 
-fig = df.plot(kind='barh',yticks=df['count']).get_figure()
-fig.savefig('out.png')
-
-# Example data
-
-#y_pos = np.arange(len(matters))
-#performance = [len(matters[m]) for m in matters]
-#error = np.zeros(len(matters))
-#
-#plt.barh(y_pos, performance, xerr=error, align='edge', alpha=0.4)
-#plt.yticks(y_pos, matters.keys())
-#plt.xlabel(u'使用次数')
-#plt.ylabel(u'食材')
-#plt.title(u'全部作品中各食材的使用次数')
-#plt.show()
+t = nltk.Text(names)
+dist = nltk.FreqDist(t)
+print txt
+for d in dist:
+    print d,dist[d]

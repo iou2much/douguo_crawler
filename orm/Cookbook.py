@@ -4,7 +4,7 @@ from mongoengine import *
 connect('douguo')  
   
 class Cookbook(Document):  
-    item_id = IntField()  
+    item_id = IntField(unique=True)
     material = ListField(DictField())
     tip = StringField()  
     steps = ListField(StringField())
