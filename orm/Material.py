@@ -4,38 +4,41 @@ import sys
 from mongoengine import *  
 connect('douguo')  
 from LogMaterialCombine import LogMaterialCombine
-  
-class Material(Document):  
+
+#material 统计后每种食材的用量
+class Material(EmbededDocument):  
     name = StringField()  
     amount = ListField(ListField(DictField()))
-    douguo_material = set()
-    confuse_word = set()
-    synonym = []
+
+    __douguo_material__ = set()
+    __confuse_word__ = set()
+    __synonym__ = []
+
     @staticmethod
     def combine(mid1,mid2,intersection,check_dict=False):
-        #print len(Material.douguo_material)
+        #print len(Material.__douguo_material__)
         #print 'check_dict:%s'%check_dict
-        if not Material.douguo_material and check_dict:
+        if not Material.__douguo_material__ and check_dict:
             df = open('dict/douguo_material.dict','r').read().split('\n')
             for line in df:
                 if line:
-                    Material.douguo_material.add(u'%s'%line.split(' ')[0].strip())
+                    Material.__douguo_material__.add(u'%s'%line.split(' ')[0].strip())
 
             df = open('dict/confuse_word_ok','r').read().split('\n')
             for line in df:
                 if line:
-                    Material.confuse_word.add(u'%s'%line.split(' ')[0].strip())
+                    Material.__confuse_word__.add(u'%s'%line.split(' ')[0].strip())
 
             df = open('dict/synonym.dict','r').read().split('\n')
             for line in df:
                 if line:
-                    #Material.synonym.append(line.split(' '))
-                    Material.synonym.append([u'%s'%w for w in line.split(' ')])
-        #print Material.synonym
+                    #Material.__synonym__.append(line.split(' '))
+                    Material.__synonym__.append([u'%s'%w for w in line.split(' ')])
+        #print Material.__synonym__
         #sys.exit()
 
             #df.close()
-        #print len(Material.douguo_material)
+        #print len(Material.__douguo_material__)
         m1 = Material.objects(id=mid1)
         #m1 = Material(id=mid1).find()
         if m1:
@@ -58,34 +61,34 @@ class Material(Document):
         for c in to_m.name:
             if c in intersection:
                 name += c
-        if name not in Material.douguo_material and check_dict:
+        if name not in Material.__douguo_material__ and check_dict:
             open('dict/confuse_word','a').write(name+'\n')
         #print 'wtffff'
-        #print len(Material.douguo_material)
-        #print len(Material.confuse_word)
-        #for w in Material.douguo_material:
+        #print len(Material.__douguo_material__)
+        #print len(Material.__confuse_word__)
+        #for w in Material.__douguo_material__:
         #    print w
-        #for w in Material.confuse_word:
+        #for w in Material.__confuse_word__:
         #    print w
-        combine_synonym = False
-        synonym_set = None
-        #if check_dict and name not in Material.douguo_material and name not in Material.confuse_word:
+        combine___synonym__ = False
+        __synonym___set = None
+        #if check_dict and name not in Material.__douguo_material__ and name not in Material.__confuse_word__:
         if check_dict:
             #print name
-            #print check_dict,name not in Material.douguo_material,name not in Material.confuse_word
-            for _synonym_set in Material.synonym:
-                if m1.name in _synonym_set and m2.name in _synonym_set:
-                    combine_synonym = True
-                    synonym_set = _synonym_set 
-                    #print 'synonym_set' 
-                    #print synonym_set 
+            #print check_dict,name not in Material.__douguo_material__,name not in Material.__confuse_word__
+            for ___synonym___set in Material.__synonym__:
+                if m1.name in ___synonym___set and m2.name in ___synonym___set:
+                    combine___synonym__ = True
+                    __synonym___set = ___synonym___set 
+                    #print '__synonym___set' 
+                    #print __synonym___set 
                     break
-            if not combine_synonym:
+            if not combine___synonym__:
                 return
 
-        if combine_synonym:
-            if name in synonym_set:
-                name = synonym_set[0]
+        if combine___synonym__:
+            if name in __synonym___set:
+                name = __synonym___set[0]
         to_m.name = name
         to_m.amount += del_m.amount
         to_m.save()
